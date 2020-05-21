@@ -9,12 +9,15 @@ class Bird:
         self.velocity = 0
         self.gravity = gravity
         self.acceleration = gravity
-        self.max_velocity = 20
-        self.jump_velocity = 10
+        self.max_velocity = 10
+        self.jump_velocity = 3
         self.rect = pygame.Rect(self.position[0] - int(self.width/2), self.position[1] - int(self.height/2), self.width, self.height)
         self.color = pygame.Color(255,0,0)
+        self.moved = False
     
     def update(self):
+        if not self.moved:
+            return
         self.velocity += self.acceleration
         self.velocity = max(self.velocity, -self.max_velocity)
         self.velocity = min(self.velocity, self.max_velocity)
@@ -23,6 +26,7 @@ class Bird:
     
     def jump(self):
         self.velocity -= self.jump_velocity
+        self.moved = True
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect)

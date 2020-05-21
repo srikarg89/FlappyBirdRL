@@ -2,18 +2,19 @@ from bird import Bird
 from pipe import Pipe
 import pygame
 import time
+import constants
 
 class Environment:
 
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.bird = Bird(height, 1)
+        self.bird = Bird(height, constants.GRAVITY)
         self.pipes = []
         self.pipe_speed = 2
         self.pipe_speed_increment = 0.1
         self.max_pipe_speed = 5
-        self.hole_range = (50,100)
+        self.hole_range = (30,70)
         self.pipe_interval = 60
         self.score = 0
         self.game_over = False
@@ -62,10 +63,10 @@ class Environment:
             if timestamp % self.pipe_interval == 0:
                 self.pipes.append(Pipe(self.width, self.height, self.hole_range, self.pipe_speed))
             pygame.display.update()
-            clock.tick(10)
+            clock.tick(60)
             timestamp += 1
-        time.sleep(2)
-    
+
+
     def check_collision(self):
         bird = self.bird
         for pipe in self.pipes:
